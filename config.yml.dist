@@ -1,0 +1,6 @@
+server:
+  addr: ":8080"
+
+database:
+  dsn: "root:@(localhost:3306)/gnc"
+  
