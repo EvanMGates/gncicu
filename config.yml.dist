@@ -3,4 +3,3 @@ server:
 
 database:
   dsn: "root:@(localhost:3306)/gnc"
-  

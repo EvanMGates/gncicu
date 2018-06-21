@@ -24,7 +24,8 @@ pack:
 	docker build -t gcr.io/gamenightcrewicu/gnc-site:$(TAG) .
 
 upload:
-	gcloud docker -- push gcr.io/gamenightcrewicu/gnc-site:$(TAG)
+	docker tag gcr.io/gamenightcrewicu/gnc-site:$(TAG) gcr.io/gamenightcrewicu/gnc-site:$(TAG)
+	docker push gcr.io/gamenightcrewicu/gnc-site:$(TAG)
 
 deploy:
 	envsubst < k8s/deployment.yml | kubectl apply -f -
