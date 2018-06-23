@@ -58,7 +58,7 @@ func createServer(config *Config) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "No. I see you, Game Night Crew.")
+	fmt.Fprintln(w, "No. I see you, Game Night Crew. Maybe.")
 }
 
 func slackbotHandler(w http.ResponseWriter, r *http.Request) {

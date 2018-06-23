@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: news-config
+  name: gnc-config
 data:
   config.yml: |-
     server:
@@ -11,4 +11,4 @@ data:
      addr: ":8080"
 
     database:
-     dsn: "proxyuser:password@(localhost:3306)/news"
+     dsn: "proxyuser:password@(localhost:3306)/gnc"
