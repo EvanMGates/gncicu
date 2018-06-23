@@ -28,5 +28,7 @@ upload:
 
 deploy:
 	envsubst < kube/deployment.yml | kubectl apply -f -
+	envsubst < kube/service.yml | kubectl apply -f -
+
 
 ship: test pack upload deploy clean
