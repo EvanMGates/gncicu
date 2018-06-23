@@ -76,7 +76,7 @@ func slackbotHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch s.Command {
 	case "/drop":
-		params := &slack.Msg{Text: s.Text}
+		params := &slack.Msg{Text: fmt.Sprintf("*%s*!!", randomLandingZone())}
 		b, err := json.Marshal(params)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
