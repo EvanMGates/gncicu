@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -51,12 +52,23 @@ func createServer(config *Config) {
 		Addr: config.Server.Addr,
 	}
 	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/slackbot", slackbotHandler)
 	http.HandleFunc("/fortnite/drop", fortniteDrop)
 	log.Fatal(hs.ListenAndServe())
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "No. I see you, Game Night Crew.")
+}
+
+func slackbotHandler(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var data slackData
+	err := decoder.Decode(&data)
+	if err != nil {
+		panic(err)
+	}
+	w.Write([]byte(data.Challenge))
 }
 
 func fortniteDrop(w http.ResponseWriter, r *http.Request) {
