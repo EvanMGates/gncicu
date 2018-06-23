@@ -73,10 +73,11 @@ func slackbotHandler(w http.ResponseWriter, r *http.Request) {
 	if !s.ValidateToken(verificationToken) {
 		w.WriteHeader(http.StatusUnauthorized)
 	}
-
 	switch s.Command {
 	case "/drop":
 		params := &slack.Msg{Text: fmt.Sprintf("*%s*!!", randomLandingZone())}
+		params.ResponseType = "in_channel"
+		params.Channel = "fortnite"
 		b, err := json.Marshal(params)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
