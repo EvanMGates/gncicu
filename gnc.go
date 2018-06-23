@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/nlopes/slack"
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -62,13 +64,30 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func slackbotHandler(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
-	var data slackData
-	err := decoder.Decode(&data)
+	const verificationToken = "2VMknV1iX74QsAUQlb5iS0ms"
+	s, err := slack.SlashCommandParse(r)
 	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
-	w.Write([]byte(data.Challenge))
+	if !s.ValidateToken(verificationToken) {
+		w.WriteHeader(http.StatusUnauthorized)
+	}
+
+	switch s.Command {
+	case "/drop":
+		params := &slack.Msg{Text: s.Text}
+		b, err := json.Marshal(params)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(b)
+	default:
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 }
 
 func fortniteDrop(w http.ResponseWriter, r *http.Request) {

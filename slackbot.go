@@ -1,7 +1,8 @@
 package main
 
 type slackData struct {
-	Type      string
-	Token     string
-	Challenge string
+	Type        string
+	Token       string
+	Challenge   string
+	ResponseURL string
 }
