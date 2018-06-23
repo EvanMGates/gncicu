@@ -1,0 +1,37 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gamenightcrewicusite
+  labels: {app: gamenightcrewicusite}
+spec:
+  replicas: 1
+  template:
+    metadata: {labels: {app: gamenightcrewicusite}}
+    spec:
+      containers:
+      - name: gamenightcrewicusite
+        image: gcr.io/gamenightcrewicu/gnc-site:${TAG}
+        command:
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+          - name: gnc-config
+            mountPath: /etc/gnc/
+            readOnly: true
+      volumes:
+        - name: gnc-config
+          configMap: { name: gnc-config }
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: gamenightcrewicusite
+spec:
+  type: LoadBalancer
+  selector:
+    app: gamenightcrewicusite
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+

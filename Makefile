@@ -28,6 +28,6 @@ upload:
 	docker push gcr.io/gamenightcrewicu/gnc-site:$(TAG)
 
 deploy:
-	envsubst < k8s/deployment.yml | kubectl apply -f -
+	envsubst < ../kube/deployment.yml | kubectl apply -f -
 
 ship: test pack upload deploy clean
