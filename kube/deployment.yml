@@ -18,6 +18,6 @@ spec:
           - name: gnc-config
             mountPath: /etc/gnc/
             readOnly: true
-        volumes:
-          - name: gnc-config
-            configMap: { name: gnc-config }
+      volumes:
+        - name: gnc-config
+          configMap: { name: gnc-config }

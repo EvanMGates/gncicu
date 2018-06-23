@@ -73,6 +73,6 @@ func slackbotHandler(w http.ResponseWriter, r *http.Request) {
 
 func fortniteDrop(w http.ResponseWriter, r *http.Request) {
 	landingZone := randomLandingZone()
-	fmt.Fprintf(w, "<html>We're dropping at <b>%s</b></html>", landingZone)
+	fmt.Fprintf(w, "*%s*!!", landingZone)
 	// Save landingZone to RedisDB
 }
