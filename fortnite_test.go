@@ -32,5 +32,6 @@ func TestBuildImage(t *testing.T) {
 	defer outFile.Close()
 	b := bufio.NewWriter(outFile)
 	gnc := getGNC()
-	gnc.writeLandingZoneImage(randomLandingZone(), b)
+	buf := gnc.getLandingZoneImage(randomLandingZone())
+	b.Write(buf.Bytes())
 }

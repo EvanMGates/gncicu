@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/nlopes/slack"
 
@@ -102,8 +103,10 @@ func slackbotHandler(w http.ResponseWriter, r *http.Request) {
 
 func (gnc *gnc) fortniteDrop(w http.ResponseWriter, r *http.Request) {
 	landingZone := randomLandingZone()
+	buffer := gnc.getLandingZoneImage(landingZone)
+	buf := buffer.Bytes()
 	w.Header().Set("Content-Type", "image/png")
-	w.Header().Set("Content-Length", "1000")
-	gnc.writeLandingZoneImage(landingZone, w)
+	w.Header().Set("Content-Length", strconv.Itoa(len(buf)))
+	w.Write(buf)
 	// Save landing zone
 }

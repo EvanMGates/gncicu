@@ -1,12 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
 	"image/png"
-	"io"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -46,7 +46,7 @@ func randomLandingZone() string {
 	return fortniteLandingZones[i]
 }
 
-func (g *gnc) writeLandingZoneImage(landingZone string, w io.Writer) {
+func (g *gnc) getLandingZoneImage(landingZone string) *bytes.Buffer {
 	fontFile := fmt.Sprintf("%s/%s", g.config.Server.Assets, "Burbank_Big_Condensed_Black.ttf")
 	imageFile := fmt.Sprintf("%s/%s", g.config.Server.Assets, "dropNoText.png")
 	dpi := float64(72)
@@ -56,17 +56,17 @@ func (g *gnc) writeLandingZoneImage(landingZone string, w io.Writer) {
 	fontBytes, err := ioutil.ReadFile(fontFile)
 	if err != nil {
 		log.Println(err)
-		return
+		return nil
 	}
 	f, err := freetype.ParseFont(fontBytes)
 	if err != nil {
 		log.Println(err)
-		return
+		return nil
 	}
 	imageStream, err := os.Open(imageFile)
 	if err != nil {
 		log.Println(err)
-		return
+		return nil
 	}
 	dropImage, _, _ := image.Decode(imageStream)
 	rgba := dropImage.(draw.Image)
@@ -84,10 +84,12 @@ func (g *gnc) writeLandingZoneImage(landingZone string, w io.Writer) {
 	_, err = c.DrawString(landingZone, pt)
 	if err != nil {
 		log.Println(err)
-		return
+		return nil
 	}
 	pt.Y += c.PointToFixed(size * spacing)
-	png.Encode(w, rgba)
+	buf := new(bytes.Buffer)
+	png.Encode(buf, rgba)
+	return buf
 	// Save that RGBA image to disk.
 	/*
 		outFile, err := os.Create("out.png")
