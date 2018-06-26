@@ -11,7 +11,7 @@ func getGNC() *gnc {
 	return &gnc{
 		config: &Config{
 			Server: Server{
-				Assets: ".",
+				Assets: "./assets",
 			},
 		},
 	}

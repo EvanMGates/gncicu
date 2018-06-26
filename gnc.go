@@ -107,6 +107,8 @@ func (gnc *gnc) fortniteDrop(w http.ResponseWriter, r *http.Request) {
 	buf := buffer.Bytes()
 	w.Header().Set("Content-Type", "image/png")
 	w.Header().Set("Content-Length", strconv.Itoa(len(buf)))
-	w.Write(buf)
+	if _, err := w.Write(buf); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 	// Save landing zone
 }
