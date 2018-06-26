@@ -45,6 +45,7 @@ func main() {
 
 func load(file string) (cfg Config, err error) {
 	cfg.Server.Addr = ":8080"
+	cfg.Server.Assets = "/var/gnc/assets"
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return
@@ -70,7 +71,7 @@ func createServer(config *Config) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "No. I see you, Game Night Crew!")
+	fmt.Fprintln(w, "No. I see you, Game Night Crew!...")
 }
 
 func slackbotHandler(w http.ResponseWriter, r *http.Request) {
@@ -107,6 +108,8 @@ func (gnc *gnc) fortniteDrop(w http.ResponseWriter, r *http.Request) {
 	buf := buffer.Bytes()
 	w.Header().Set("Content-Type", "image/png")
 	w.Header().Set("Content-Length", strconv.Itoa(len(buf)))
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+
 	if _, err := w.Write(buf); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
