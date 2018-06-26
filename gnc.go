@@ -13,17 +13,23 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+type Database struct {
+	DNS string
+}
+
+type Server struct {
+	Addr   string
+	Assets string
+}
+
 type Config struct {
-	Database struct {
-		DSN string
-	}
-	Server struct {
-		Addr string
-	}
+	Database Database
+	Server   Server
 }
 
 type gnc struct {
-	hs http.Server
+	hs     *http.Server
+	config *Config
 }
 
 func main() {
@@ -53,9 +59,12 @@ func createServer(config *Config) {
 	hs := &http.Server{
 		Addr: config.Server.Addr,
 	}
+	g := gnc{config: config,
+		hs: hs,
+	}
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/slackbot", slackbotHandler)
-	http.HandleFunc("/fortnite/drop", fortniteDrop)
+	http.HandleFunc("/fortnite/drop", g.fortniteDrop)
 	log.Fatal(hs.ListenAndServe())
 }
 
@@ -91,8 +100,8 @@ func slackbotHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func fortniteDrop(w http.ResponseWriter, r *http.Request) {
+func (gnc *gnc) fortniteDrop(w http.ResponseWriter, r *http.Request) {
 	landingZone := randomLandingZone()
-	writeLandingZoneImage(landingZone, w)
+	gnc.writeLandingZoneImage(landingZone, w)
 	// Save landing zone
 }

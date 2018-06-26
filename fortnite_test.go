@@ -7,6 +7,16 @@ import (
 	"testing"
 )
 
+func getGNC() *gnc {
+	return &gnc{
+		config: &Config{
+			Server: Server{
+				Assets: ".",
+			},
+		},
+	}
+}
+
 func TestRandomLandingZone(t *testing.T) {
 	for i := 0; i < 100000; i++ {
 		go randomLandingZone()
@@ -21,5 +31,6 @@ func TestBuildImage(t *testing.T) {
 	}
 	defer outFile.Close()
 	b := bufio.NewWriter(outFile)
-	writeLandingZoneImage(randomLandingZone(), b)
+	gnc := getGNC()
+	gnc.writeLandingZoneImage(randomLandingZone(), b)
 }

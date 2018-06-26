@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
@@ -45,9 +46,9 @@ func randomLandingZone() string {
 	return fortniteLandingZones[i]
 }
 
-func writeLandingZoneImage(landingZone string, w io.Writer) {
-	fontFile := "assets/Burbank_Big_Condensed_Black.ttf"
-	imageFile := "assets/dropNoText.png"
+func (g *gnc) writeLandingZoneImage(landingZone string, w io.Writer) {
+	fontFile := fmt.Sprintf("%s/%s", g.config.Server.Assets, "Burbank_Big_Condensed_Black.ttf")
+	imageFile := fmt.Sprintf("%s/%s", g.config.Server.Assets, "dropNoText.png")
 	dpi := float64(72)
 	size := float64(142)
 	spacing := float64(1.5)

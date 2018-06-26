@@ -5,7 +5,7 @@ RUN apk -U add ca-certificates
 EXPOSE 8080
 
 ADD gnc /bin/gnc
-ADD assets /bin/gnc/assets
+ADD assets /var/gnc/
 ADD config.yml.dist /etc/gnc/config.yml
 
 CMD ["gnc", "-config", "/etc/gnc/config.yml"]

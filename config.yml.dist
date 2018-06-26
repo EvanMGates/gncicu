@@ -1,5 +1,6 @@
 server:
   addr: ":8080"
+  assets: "/var/gnc/assets"
 
 database:
   dsn: "root:@(localhost:3306)/gnc"
