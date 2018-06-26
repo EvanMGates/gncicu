@@ -60,7 +60,7 @@ func createServer(config *Config) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "No. I see you, Game Night Crew. Maybe... Naw.")
+	fmt.Fprintln(w, "No. I see you, Game Night Crew!")
 }
 
 func slackbotHandler(w http.ResponseWriter, r *http.Request) {
@@ -93,6 +93,6 @@ func slackbotHandler(w http.ResponseWriter, r *http.Request) {
 
 func fortniteDrop(w http.ResponseWriter, r *http.Request) {
 	landingZone := randomLandingZone()
-	fmt.Fprintf(w, "*%s*!!", landingZone)
-	// Save landingZone to RedisDB
+	writeLandingZoneImage(landingZone, w)
+	// Save landing zone
 }

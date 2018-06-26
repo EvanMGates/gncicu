@@ -1,21 +1,26 @@
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: gnc-deploy
+  labels: gnc-site
 spec:
+  replicas: 3
   selector:
     matchLabels:
-      app: nginx
-  replicas: 2 # tells deployment to run 2 pods matching the template
-  template: # create pods using pod definition in this template
-    metadata:
-      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
-      # generated from the deployment name
-      labels:
-        app: nginx
+      name: gnc-site
+  template:
+    metadata: {labels: {app: gnc-site}}
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.7.9
+      - name: gnc-site
+        image: gcr.io/gamenightcrewicu/gnc-site:${TAG}
+        command:
         ports:
-        - containerPort: 80
+          - containerPort: 8080
+        volumeMounts:
+          - name: gnc-config
+            mountPath: /etc/gnc/
+            readOnly: true
+      volumes:
+        - name: gnc-config
+          configMap: { name: gnc-config }
