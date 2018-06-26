@@ -102,6 +102,7 @@ func slackbotHandler(w http.ResponseWriter, r *http.Request) {
 
 func (gnc *gnc) fortniteDrop(w http.ResponseWriter, r *http.Request) {
 	landingZone := randomLandingZone()
+	w.Header().Set("Content-Type", "image/png")
 	gnc.writeLandingZoneImage(landingZone, w)
 	// Save landing zone
 }
