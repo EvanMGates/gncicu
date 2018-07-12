@@ -20,7 +20,7 @@ import (
 var fortniteLandingZones = [...]string{
 	"Junk Junction",
 	"Haunted Hills",
-	"Anarchy Acres",
+	"Lazy Link",
 	"Risky Reels",
 	"Wailing Woods",
 	"Tomato Town",
@@ -35,9 +35,10 @@ var fortniteLandingZones = [...]string{
 	"Shifty Shafts",
 	"Salty Springs",
 	"Fatal Fields",
-	"Moisty Mire",
+	"Paradise Palms",
 	"Flush Factory",
 	"Lucky Landing",
+	"Desert",
 }
 
 func randomLandingZone() string {
