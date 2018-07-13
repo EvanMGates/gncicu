@@ -20,7 +20,7 @@ import (
 var fortniteLandingZones = [...]string{
 	"Junk Junction",
 	"Haunted Hills",
-	"Lazy Link",
+	"Lazy Links",
 	"Risky Reels",
 	"Wailing Woods",
 	"Tomato Town",
